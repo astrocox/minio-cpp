@@ -17,9 +17,6 @@
 #define _MINIO_CREDS_PROVIDERS_H
 
 #include <INIReader.h>
-#include <arpa/inet.h>
-#include <netdb.h>
-#include <sys/socket.h>
 #include <sys/types.h>
 
 #include <fstream>

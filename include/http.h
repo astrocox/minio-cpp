@@ -16,8 +16,6 @@
 #ifndef _MINIO_HTTP_H
 #define _MINIO_HTTP_H
 
-#include <arpa/inet.h>
-
 #include <curlpp/Easy.hpp>
 #include <curlpp/Multi.hpp>
 #include <curlpp/Options.hpp>

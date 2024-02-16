@@ -12,9 +12,8 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
-#include <unistd.h>
-
+#include <algorithm>
+#include <chrono>
 #include <random>
 #include <thread>
 
@@ -39,7 +38,9 @@ class RandomBuf : public std::streambuf {
   int_type underflow() override {
     if (size_ == 0) return EOF;
 
-    size_t size = std::min(size_, buf_.size());
+    size_t size = (((size_) < (buf_.size())) ? (size_) : (buf_.size()));
+    // I have no idea why the line below does not compile
+    //size_t size = std::min(size_, buf_.size());
     setg(&buf_[0], &buf_[0], &buf_[size]);
     for (size_t i = 0; i < size; ++i) buf_[i] = charset[pick(rg)];
     size_ -= size;
@@ -623,7 +624,7 @@ class Tests {
       }
     }};
 
-    usleep(10 * 1000);  // sleep for 10ms.
+    std::this_thread::sleep_for(std::chrono::milliseconds(10)); // sleep for 10ms.
 
     std::string object_name = RandObjectName();
     try {

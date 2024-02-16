@@ -78,6 +78,12 @@ ELSE(OPENSSL_FOUND)
   MESSAGE(FATAL_ERROR "Could not find the OpenSSL library and development files.")
 ENDIF(OPENSSL_FOUND)
 
+if(WIN32)
+    list(APPEND requiredlibs wsock32)
+    list(APPEND requiredlibs ws2_32)
+    list(APPEND requiredlibs ZLIB::ZLIB)
+endif()
+
 message(STATUS "Found required libs: ${requiredlibs}")
 
 INCLUDE (CheckIncludeFiles)

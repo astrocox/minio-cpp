@@ -16,17 +16,16 @@
 #ifndef _MINIO_UTILS_H
 #define _MINIO_UTILS_H
 
-#include <arpa/inet.h>
 #include <openssl/buffer.h>
 #include <openssl/evp.h>
-#include <pwd.h>
 #include <sys/types.h>
-#include <unistd.h>
 #include <zlib.h>
 
 #include <array>
+#include <chrono>
 #include <cmath>
 #include <cstring>
+#include <ctime>
 #include <curlpp/cURLpp.hpp>
 #include <iomanip>
 #include <iostream>
@@ -122,7 +121,7 @@ class Time {
  public:
   Time() {}
 
-  Time(std::time_t tv_sec, suseconds_t tv_usec, bool utc) {
+  Time(std::time_t tv_sec, long tv_usec, bool utc) {
     this->tv_.tv_sec = tv_sec;
     this->tv_.tv_usec = tv_usec;
     this->utc_ = utc;
@@ -146,7 +145,10 @@ class Time {
 
   static Time Now() {
     Time t;
-    gettimeofday(&t.tv_, NULL);
+    auto now = std::chrono::high_resolution_clock::now();
+    auto usec = std::chrono::duration_cast<std::chrono::microseconds>(now.time_since_epoch()).count();
+    t.tv_.tv_sec = static_cast<long>(usec / 1000000);
+    t.tv_.tv_usec = static_cast<long>(usec % 1000000);
     return t;
   }
 
