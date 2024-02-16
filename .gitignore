@@ -20,7 +20,7 @@ docs/*map
 docs/*md5
 include/config.h
 .idea/
-cmake-build-debug/
+cmake-build*
 vcpkg-master.zip
 vcpkg-master/
 
