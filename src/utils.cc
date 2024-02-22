@@ -28,7 +28,9 @@ const std::regex IPV4_REGEX(
     "^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\\.){3}"
     "(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])$");
 
-extern "C" char* strptime(const char* s,
+// strptime is defined here because it's not available on Windows.
+// Alternatively, this could be hidden behind a conditional preprocessor directive.
+static char* strptime(const char* s,
                           const char* f,
                           struct tm* tm) {
     std::istringstream input(s);

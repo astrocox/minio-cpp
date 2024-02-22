@@ -37,9 +37,7 @@ class RandomBuf : public std::streambuf {
   int_type underflow() override {
     if (size_ == 0) return EOF;
 
-    size_t size = (((size_) < (buf_.size())) ? (size_) : (buf_.size()));
-    // I have no idea why the line below does not compile
-    //size_t size = std::min(size_, buf_.size());
+    size_t size = std::min<size_t>(size_, buf_.size());
     setg(&buf_[0], &buf_[0], &buf_[size]);
     for (size_t i = 0; i < size; ++i) buf_[i] = charset[pick(rg)];
     size_ -= size;
