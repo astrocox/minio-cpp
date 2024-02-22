@@ -16,6 +16,12 @@
 #ifndef _MINIO_HTTP_H
 #define _MINIO_HTTP_H
 
+#ifdef _WIN32
+#include <ws2tcpip.h>
+#else
+#include <arpa/inet.h>
+#endif
+
 #include <curlpp/Easy.hpp>
 #include <curlpp/Multi.hpp>
 #include <curlpp/Options.hpp>

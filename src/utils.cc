@@ -54,7 +54,11 @@ std::string minio::utils::GetHomeDir() {
   std::string home;
   if (GetEnv(home, "HOME")) return home;
   if (GetEnv(home, "USERPROFILE")) return home;
+#ifdef _WIN32
   return "";
+#else
+  return getpwuid(getuid())->pw_dir;
+#endif
 }
 
 std::string minio::utils::Printable(std::string s) {
