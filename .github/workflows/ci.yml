@@ -146,7 +146,7 @@ jobs:
       shell: bash
       if: startsWith(matrix.config.os, 'windows')
       run: |
-        SERVER_ENDPOINT=localhost:9000 ACCESS_KEY=minioadmin SECRET_KEY=minioadmin ENABLE_HTTPS=1 ./build/tests/tests.exe
+        SERVER_ENDPOINT=localhost:9000 ACCESS_KEY=minioadmin SECRET_KEY=minioadmin ENABLE_HTTPS=1 ./build/tests/Release/tests.exe
 
     - name: Run CMake test
       working-directory: ${{github.workspace}}/build
