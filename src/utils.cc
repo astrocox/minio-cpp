@@ -28,8 +28,8 @@ const std::regex IPV4_REGEX(
     "^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\\.){3}"
     "(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])$");
 
+#ifdef _WIN32
 // strptime is defined here because it's not available on Windows.
-// Alternatively, this could be hidden behind a conditional preprocessor directive.
 static char* strptime(const char* s,
                           const char* f,
                           struct tm* tm) {
@@ -41,6 +41,7 @@ static char* strptime(const char* s,
     }
     return (char*)(s + input.tellg());
 }
+#endif
 
 bool minio::utils::GetEnv(std::string& var, const char* name) {
   if (const char* value = std::getenv(name)) {
@@ -277,7 +278,7 @@ std::string minio::utils::FormatTime(const std::tm* time, const char* format) {
 
 std::tm* minio::utils::Time::ToUTC() {
   std::tm* t = new std::tm;
-  const long long secs =  tv_.tv_sec;
+  const time_t secs =  tv_.tv_sec;
   *t = utc_ ? *std::localtime(&secs) : *std::gmtime(&secs);
   return t;
 }

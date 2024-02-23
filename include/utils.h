@@ -16,6 +16,10 @@
 #ifndef _MINIO_UTILS_H
 #define _MINIO_UTILS_H
 
+#ifndef _WIN32
+#include <pwd.h>
+#endif
+
 #include <openssl/buffer.h>
 #include <openssl/evp.h>
 #include <sys/types.h>
